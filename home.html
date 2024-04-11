@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="../css/bootstrap-5.3.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/fontawesome-free-6.4.2-web/css/all.min.css">
+    <link rel="stylesheet" href="../css/client.css">
+</head>
+<body>
+        <!-- The header section starts here -->
+        <header> 
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: darkcyan;">
+                <div class="container-fluid">
+                    <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                        <i class="fa-solid fa-bars"></i>
+                      </a>
+                    <h3 class="navbar-brand" style="font-family: 'Times New Roman', Times, serif;">Housing Portal</h3>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i>
+                                    <!-- insert a code to set a person's name as they log in into there account-->
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a href="#" class="dropdown-item" style="font-family: 'Times New Roman', Times, serif;"><i class="fas fa-key p-2"></i>Change Password</a></li>
+                                    <li><a href="#" class="dropdown-item" style="font-family: 'Times New Roman', Times, serif;"><i class="fas fa-phone p-2"></i>Change Phone Number</a></li>
+                                    <li><a href="#" class="dropdown-item" style="font-family: 'Times New Roman', Times, serif;"><i class="fas fa-sign-out p-2"></i>Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+            </nav>
+        
+              <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header" style="background-color: darkcyan;">
+                  <h5 class="offcanvas-title" id="offcanvasExampleLabel" style="font-family: 'Times New Roman', Times, serif;">Menu</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <hr>
+                <div class="offcanvas-body">
+                  <div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="home.html" class="nav-link active" style="color: darkcyan; font-family: 'Times New Roman', Times, serif;">
+                                <i class="fa fa-dashboard"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" style="color: darkcyan; font-family: 'Times New Roman', Times, serif;">
+                                <i class="fas fa-building"></i>
+                                Room Selection
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" style="color: darkcyan; font-family: 'Times New Roman', Times, serif;">
+                                <i class="fas fa-envelope-open"></i>
+                                Notifications
+                            </a>
+                        </li>
+    
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" style="color: darkcyan; font-family: 'Times New Roman', Times, serif;">
+                                <i class="fas fa-comments"></i>
+                                Report Maintanance Issues
+                            </a>
+                        </li>
+                    </ul>
+                  </div>
+                </header>
+                <!-- Header section ends here -->
+
+                <!-- Main Section begins here -->
+                <main>
+                <div class="container-fluid">
+                    <h3 class="text-center" style="font-style: italic; font-family: 'Times New Roman', Times, serif;">Welcome to the Housing Portal <i class="fas fa-home"></i></h3>
+                    <hr>
+                
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                    <div class="card text-center shadow" style="height: 100px;">
+                        <div class="card-body">
+                            <a href="#" style="text-decoration: none;"><h5 class="card-title" style="color:darkcyan; font-family: 'Times New Roman', Times, serif;">Block 1</h5></a>
+                            <p class="card-text" style="font-family: 'Times New Roman', Times, serif;">Only Boys Reside in this block </p>
+                        </div>
+                    </div>
+                    </div>
+                
+                    <div class="col-sm-4">
+                    <div class="card text-center shadow" style="height: 100px;">
+                        <div class="card-body">
+                            <a href="#" style="text-decoration: none;"><h5 class="card-title" style="color: darkcyan; font-family: 'Times New Roman', Times, serif;">Block 2</h5></a>
+                            <p class="card-text" style="font-family: 'Times New Roman', Times, serif;">This block accomodates both gender, but they are separated with sides.</p>
+                        </div>
+                    </div>
+                    </div>
+                
+                    <div class="col-sm-4">
+                    <div class="card text-center shadow" style="height: 100px;">
+                        <div class="card-body">
+                            <a href="#" style="text-decoration: none;"><h5 class="card-title" style="color: darkcyan; font-family: 'Times New Roman', Times, serif;">Block 3</h5></a>
+                            <p class="card-text" style="font-family: 'Times New Roman', Times, serif;">Only Girls Reside in this block.</p>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                
+                    <div class="row">
+                    <div class="col-sm-4">
+                    <div class="card text-center shadow" style="height: 100px;">
+                        <div class="card-body">
+                            <a href="#" style="text-decoration: none;"><h5 class="card-title" style="color: darkcyan; font-family: 'Times New Roman', Times, serif;">Block 4</h5></a>
+                            <p class="card-text" style="font-family: 'Times New Roman', Times, serif;">This block accomodates both gender, but they are separated with sides.</p>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                
+                </main>
+                    <!-- The main section ends here -->
+
+                    <!-- Footer Section starts here -->
+                    <footer style="padding-top: 190px;">
+                        <div class="container-fluid" style="background-color: darkcyan;">
+                            <p class="text-center" >&copy; 2024 Housing Portal. All Rights Reserved. Developed by JOPAM.</p>
+                        </div>
+                    </footer>
+                    <script src="../css/bootstrap-5.3.1-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
