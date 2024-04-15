@@ -46,6 +46,8 @@ public class AuthenticationService {
                     .firstName(studentDTO.getFirstName())
                     .lastName(studentDTO.getLastName())
                     .gender(studentDTO.getGender())
+                    .program(studentDTO.getProgram())
+                    .yos(Integer.parseInt(studentDTO.getYos()))
                     .password(passwordEncoder.encode(studentDTO.getPassword()))
                     .roomStatus(RoomStatus.NOT_ASSIGNED)
                     .role(Role.USER)

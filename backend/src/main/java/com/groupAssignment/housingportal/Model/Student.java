@@ -36,6 +36,12 @@ public class Student implements UserDetails {
     @Column(name="gender", length=8)
     private String gender;
 
+    @Column(name="program", length=20)
+    private String program;
+
+    @Column(name="yos", length=20)
+    private int yos;
+
     @Column(name="password", length=200)
     private String password;
 
