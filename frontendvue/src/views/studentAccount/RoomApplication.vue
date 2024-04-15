@@ -1,5 +1,18 @@
 <template>
     <div class="">
+        <div class="w-1/5 mb-4">
+            <label for="countries" class="block mb-2 text-md font-medium text-gray-900">Select Block</label>
+
+            <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option selected disabled>Choose Block</option>
+                <option value="US">United States</option>
+                <option value="CA">Canada</option>
+                <option value="FR">France</option>
+                <option value="DE">Germany</option>
+            </select>
+        </div>
+     
+
         <div class="border-[2px] border-[#51751d] min-w-[300px] w-1/5 flex flex-col hover:shadow-md transition-all duration-100 ease-in">
             <div class="flex flex-row space-x-8 p-4 items-center">
                 <span class="material-symbols-outlined text-3xl text-gray-600 border rounded-full py-1 px-2 border-[#51751d]">
