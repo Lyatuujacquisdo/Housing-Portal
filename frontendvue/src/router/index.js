@@ -37,6 +37,7 @@ const routes =[
         name:"userAccount",
         path:"/acc",
         component : LayoutView,
+        meta: {requiresAuth : true},
         children:[
             {
                 name:"dashboard",
@@ -60,6 +61,17 @@ const routes =[
 const router=createRouter({
     history:createWebHistory(), 
     routes
+})
+
+router.beforeEach((to, from, next) => {
+    // to and from are both route objects. must call `next`.
+    if(to.meta.requiresAuth && !localStorage.getItem('token')){
+        //if it requires auth and theres no token
+        next('/login');
+        return;
+    }
+  
+    next()
 })
 
 export default router

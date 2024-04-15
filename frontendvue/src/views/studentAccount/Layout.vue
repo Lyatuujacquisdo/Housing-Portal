@@ -126,7 +126,8 @@
 
     const logout = ()=>{
         console.log('went through logout function');
-        store.logout();
+        localStorage.removeItem('token')
+        router.push('/')
     }
 
 </script>

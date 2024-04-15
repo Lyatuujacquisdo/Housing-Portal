@@ -1,4 +1,106 @@
+<script setup>
+    import {ref, watchEffect, watch} from "vue"
+    import {notifyError, notifySuccess} from "@/utils/notificationService.js"
+    import axios from "axios"
+    import { useRouter } from "vue-router"
 
+    const router = useRouter();
+
+    const registerData = ref({
+      registrationNo:"",
+      email:"",
+      password:"",
+      program:"",
+      yos:"",
+      firstName:"",
+      lastName:"",
+      gender:""
+    })
+
+    const reset = ()=>{
+      registerData.value.registrationNo = ""
+      registerData.value.program = ""
+      registerData.value.yos = ""
+      registerData.value.firstName = ""
+      registerData.value.lastName = ""
+      registerData.value.gender = ""
+      registerData.value.email = ""
+      registerData.value.password = ""
+      registerData.value.confirmPassword = ""
+    }
+
+  const isPasswordValid = ref(true);
+
+  const validationMessage = ref("")
+
+    const getValidation = ()=> {
+      const messages = [];
+      let isValid = true;
+
+      if(!registerData.value.password){
+        return
+      }
+      if (!/(?=.*[a-z])/.test(registerData.value.password)) {
+        isValid = false;
+        messages.push('at least one lowercase letter');
+      }
+      if (!/(?=.*[A-Z])/.test(registerData.value.password)) {
+        isValid = false;
+        messages.push('at least one uppercase letter');
+      }
+      if (!/(?=.*\d)/.test(registerData.value.password)) {
+        isValid = false;
+        messages.push('at least one digit');
+      }
+      if (!/(?=.*[@$!%*?&])/.test(registerData.value.password)) {
+        isValid = false;
+        messages.push('at least one symbol');
+      }
+
+      if(messages.length > 0)
+        validationMessage.value = `Password must contain ${messages.join(', ')}.`;
+      else{
+        validationMessage.value = ""
+      }
+
+      if(registerData.value.confirmPassword && registerData.value.confirmPassword !== registerData.value.password){
+          validationMessage.value = validationMessage.value + " Passwords do not match"
+      }
+
+      return isValid ;
+    }
+
+    watchEffect(()=>{
+       isPasswordValid.value = getValidation();
+    })
+
+      const register = ()=>{
+          if(!isPasswordValid.value){
+              return
+          } 
+
+          delete registerData.value.confirmPassword 
+          axios.post(import.meta.env.VITE_AUTH_BASE_URL+'/register',registerData.value).then((response)=>{
+          reset()
+        
+          if(response.data.token == null)
+              notifyError("User Already Exists!")
+          
+          else
+          {
+              notifySuccess("Successfully Registered")
+              localStorage.setItem('token', response.data.token);
+              localStorage.setItem('email', response.data.registrationNo);
+              router.push('/login')
+          }
+          })
+          .catch((error)=>{
+            notifyError(error.message)
+              console.log('Error: '+ error.message)
+          })
+      }
+
+</script>
 <template>
     <div class="flex flex-grow flex-col md:flex-row w-3/4 mx-auto">
         <div 
@@ -14,42 +116,56 @@
         :visible="{ x: 0, transition: { duration: 1000 } }"
         class="w-full md:w-3/5 ml-4 min-w-[380px] md:h-full flex justify-center p-4">
             <div class=" mx-auto border-[2px] border-gray-200 shadow-sm flex justify-center items-center ">
-                <form class="form flex flex-col gap-[10px] relative rounded-sm p-[20px] h-full py-10 mx-auto items-center justify-center overflow-hidden">
+                <form @submit.prevent="register()" class="form flex flex-col gap-[10px] relative rounded-sm p-[20px] h-full py-10 mx-auto items-center justify-center overflow-hidden">
                     <p class="title">Register</p>
                     <p class="message">Sign up now and get full access to our app. </p>
                     <div class="flex justify-center">
                         <label>
-                            <input required="" placeholder="" type="text" class="input">
+                            <input v-model="registerData.firstName" required placeholder="" type="text" class="input">
                             <span>Firstname</span>
                         </label>
 
                         <label >
-                            <input required="" placeholder="" type="text" class="input" >
+                            <input v-model="registerData.lastName" required placeholder="" type="text" class="input" >
                             <span>Lastname</span>
                         </label>
                     </div>   
                     <label class="w-full">
-                        <input required="" placeholder="" type="email" class="input">
+                        <input v-model="registerData.email" required placeholder="" type="email" class="input">
                         <span>Email</span>
                     </label> 
+                    <div class="flex justify-center">
+                        <label>
+                            <input v-model="registerData.program" required placeholder="" type="text" class="input">
+                            <span>Program</span>
+                        </label>
+
+                        <label >
+                            <input v-model="registerData.yos" required placeholder="" type="text" class="input" >
+                            <span>Year Of Study</span>
+                        </label>
+                    </div>  
                     <label class="w-full">
-                        <input required="" placeholder="" type="text" class="input">
+                        <input v-model="registerData.registrationNo" required placeholder="" type="text" class="input">
                         <span>Registration Number</span>
                     </label>
                     <label class="w-full">
-                        <input required="" placeholder="" type="text" class="input">
+                        <input v-model="registerData.gender" required placeholder="" type="text" class="input">
                         <span>Gender</span>
                     </label>
                         
                     <label class="w-full">
-                        <input required="" placeholder="" type="password" class="input">
+                        <input v-model="registerData.password" required placeholder="" type="password" class="input">
                         <span>Password</span>
                     </label>
                     <label class="w-full">
-                        <input required="" placeholder="" type="password" class="input">
+                        <input v-model="registerData.confirmPassword" required placeholder="" type="password" class="input">
                         <span>Confirm password</span>
                     </label>
 
+                    <div class="w-80 h-auto text-sm font-bold text-[#51751d] text-wrap transition-all duration-300 ease-in">
+                        {{ validationMessage }}
+                    </div>
                     <div class="flex flex-col w-full space-y-3">
                         <button class="submit">Submit</button>
                         <p class="signin">Already have an account ? <router-link to="/login" class="text-royalblue">Sign In</router-link> </p>
@@ -62,7 +178,6 @@
 
 
 <style scoped>
-
 
 .title {
   font-size: 28px;
