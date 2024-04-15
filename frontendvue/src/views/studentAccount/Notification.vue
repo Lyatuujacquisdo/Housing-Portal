@@ -1,3 +1,3 @@
 <template>
-    <div>this is the login</div>
+    <div>this is the notifications page</div>
 </template>

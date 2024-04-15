@@ -7,7 +7,7 @@
   
           <span class="text-sm text-gray-600 sm:text-center dark:text-gray-400">
               2024
-              <a href="https://flowbite.com/" class="hover:underline">CodeIsLife</a>
+              <a href="/" class="hover:underline">CodeIsLife</a>
               Made by Group 6, 3rd Year - Software Engineering, Cive, UDOM
           </span>
       </div>
