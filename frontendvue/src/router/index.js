@@ -43,16 +43,19 @@ const routes =[
                 name:"dashboard",
                 path:"",
                 component : ProfileView,
+                meta: {requiresAuth : true},
             },
             {
                 name:"room",
                 path:"/rooms",
                 component : RoomApplicationView,
+                meta: {requiresAuth : true},
             },
             {
                 name:"notifications",
                 path:"/notifications",
                 component : NotificationView,
+                meta: {requiresAuth : true},
             },
         ]
     },
@@ -70,7 +73,6 @@ router.beforeEach((to, from, next) => {
         next('/login');
         return;
     }
-  
     next()
 })
 

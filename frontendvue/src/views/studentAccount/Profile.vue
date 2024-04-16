@@ -1,5 +1,5 @@
 <template>
-    <div class="w-1/2 min-w-[300px] mx-auto">
+    <div v-if="profile" class="w-1/2 min-w-[300px] mx-auto">
         <div class="w-3/4 mx-auto flex flex-col space-y-4 justify-center min-w-[400px]">
                     <div class="border-b-[2px] mb-8 px-2">
                         <label class="mb-4 font-medium text-2xl text-[#51751d]" for="email">Profile</label>
@@ -10,7 +10,7 @@
                             <input
                                 disabled
                                 type="text"
-                                v-model="email"
+                                v-model="profile.firstName"
                                 placeholder="Email Address"
                                 class="block min-h-[auto] border rounded w-full bg-transparent p-3 py-[0.32rem]  outline-none transition-max-height duration-300 ease-in-out"
                                 id="email"
@@ -21,7 +21,7 @@
                             <input
                                 disabled
                                 type="text"
-                                v-model="email"
+                                v-model="profile.lastName"
                                 placeholder="Email Address"
                                 class="block min-h-[auto] border rounded w-full bg-transparent p-3 py-[0.32rem]  outline-none transition-max-height duration-300 ease-in-out"
                                 id="email"
@@ -34,7 +34,7 @@
                         <input
                             disabled
                             type="text"
-                            v-model="email"
+                            v-model="profile.registrationNo"
                             placeholder="Email Address"
                             class="block min-h-[auto] w-full border rounded  bg-transparent px-3 py-[0.32rem]  outline-none transition-max-height duration-300 ease-in-out"
                             id="regNo"
@@ -46,7 +46,7 @@
                         <input
                             disabled
                             type="text"
-                            v-model="email"
+                            v-model="profile.program"
                             placeholder="Email Address"
                             class="block min-h-[auto]  w-full border rounded  bg-transparent px-3 py-[0.32rem]  outline-none transition-max-height duration-300 ease-in-out"
                             id="regNo"
@@ -57,7 +57,7 @@
                         <input
                             disabled
                             type="text"
-                            v-model="email"
+                            v-model="profile.email"
                             placeholder="Email Address"
                             class="block min-h-[auto]  w-full border rounded  bg-transparent px-3 py-[0.32rem]  outline-none transition-max-height duration-300 ease-in-out"
                             id="email"
@@ -68,18 +68,19 @@
                         <input
                             disabled
                             type="text"
-                            v-model="email"
+                            v-model="profile.gender"
                             placeholder="Email Address"
                             class="block min-h-[auto]  w-full border rounded  bg-transparent px-3 py-[0.32rem]  outline-none transition-max-height duration-300 ease-in-out"
                             id="email"
                         />
                     </div>
                     <div class="">
-                        <label class="mb-4 font-medium text-lg text-gray-700" for="email">Room <span>(ASSIGNED)</span> </label>
+                        <label class="mb-4 font-medium text-lg text-gray-700" for="email">Room <span class="text-red-500" :class="{'text-green-500':profile.roomStatus == 'ASSIGNED'}" >({{profile.roomStatus}})</span> </label>
                         <input
+                            v-if="profile.roomStatus == 'ASSIGNED'"
                             disabled
                             type="text"
-                            v-model="email"
+                            v-model="profile.roomId"
                             placeholder="Email Address"
                             class="block min-h-[auto] w-full border rounded  bg-transparent px-3 py-[0.32rem]  outline-none transition-max-height duration-300 ease-in-out"
                             id="email"
@@ -93,7 +94,7 @@
 
 <script setup>
 import { ref } from "vue";
+const {profile} = defineProps(['profile'])
 
-const email = ref('pbsemufali21@gmail.com')
 
 </script>

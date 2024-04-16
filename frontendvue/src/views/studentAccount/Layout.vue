@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-screen bg-[#f7f8fa] flex flex-col">
 
-        <div class="flex flex-row h-full">
+        <div class="flex flex-row h-[94.5%]">
 
             <div class="absolute h-auto w-full flex justify-between p-2 max-md:opacity-0 z-20 transition-opacity duration-400 ease-in items-center bg-white border-b-[1px] shadow-sm">
                 <h1 @click="router.push({name:home})" class="text-2xl font-mono font-semibold text-pretty text-[#51751d] transition-all duration-800 p-2 ease-in"
@@ -93,7 +93,7 @@
             </div>
 
 
-            <div @click="showLogoutModal = false"  class=" flex flex-grow transition-width duration-200 ease-in flex-col mt-24 mb-10  mr-8 pt-3 rounded-md shadow border-[2px] border-gray-200 bg-white overflow-y-auto "  :class="{'max-md:-z-10':sidebarExpanded}">
+            <div @click="showLogoutModal = false"  class=" flex flex-grow transition-width items-center justify-center duration-200 ease-in flex-col mt-24 mb-5 mr-8 pt-3 rounded-md shadow border-[2px] border-gray-200 bg-white overflow-y-auto "  :class="{'max-md:-z-10':sidebarExpanded}">
                 <nav class="h-6 w-full relative">
                     <button type="button" class="absolute p-1 left-0 top-2 mr-auto transition duration-300 ease-in z-16 m-2" :class="{'  bg-white flex items-center justify-center flex-col':!sidebarExpanded}" @click="sidebarExpanded =!sidebarExpanded">
                           <div class="w-[23px] h-[2px] transition ease-in duration-150 bg-[#51751d] mb-1" :class="{'rotate-45 mb-0 translate-y-[1px]':sidebarExpanded,'rotate-0 mb-1':!sidebarExpanded}"></div>
@@ -104,11 +104,11 @@
 
                 <!-- main content -->
                 <div class=" mt-8 px-4 -z-5 relative m-5" :class="{'max-md:blur-sm max-md:pointer-events-none':sidebarExpanded}" >
-                    <router-view></router-view> 
+                    <router-view :profile="profile" :vacantRooms="vacantRooms" ></router-view> 
                 </div>
             </div>
         </div>
-        <myFooter/>
+        <myFooter class=""/>
     </div>
     
   </template>
@@ -119,10 +119,66 @@
     import {ref,onMounted} from 'vue'
     import {useRoute, useRouter} from 'vue-router'
     import myFooter from '@/components/myFooter.vue';
-  
+    import axios from 'axios';
+
     const router = useRouter();
     const showLogoutModal = ref(false)
     const sidebarExpanded = ref(true)
+    const profile = ref({})
+    const vacantRooms = ref({})
+
+    const getProfile = async()=>{
+        await axios.post(import.meta.env.VITE_RES_BASE_URL+'/profile',null,
+            {
+                headers: {
+                    Authorization : 'Bearer '+ localStorage.getItem('token'),
+                }
+            }
+        ).then((response)=>{
+
+            if(response.data == null)
+                notifyError("Server Error, contact Admin!")
+            
+            else
+            {
+                profile.value = response.data
+                localStorage.setItem('registrationNo', response.data.registrationNo);
+                localStorage.setItem('email', response.data.email);
+            }
+        })
+        .catch((error)=>{
+            console.log('Error: '+ error.message)
+        })
+      } 
+      const getVacantRooms = async()=>{
+        await axios.get(import.meta.env.VITE_RES_BASE_URL+'/vacant',
+            {
+                headers: {
+                    Authorization : 'Bearer '+ localStorage.getItem('token'),
+                }
+            }
+        ).then((response)=>{
+
+            if(response.data == null)
+                notifyError("Server Error, contact Admin!")
+            
+            else
+            {
+                vacantRooms.value = response.data
+                localStorage.setItem('registrationNo', response.data.registrationNo);
+                localStorage.setItem('email', response.data.email);
+            }
+        })
+        .catch((error)=>{
+            console.log('Error: '+ error.message)
+        })
+      } 
+      
+    
+    onMounted(async () =>{
+        await getVacantRooms();
+        await getProfile();
+     })
 
     const logout = ()=>{
         console.log('went through logout function');

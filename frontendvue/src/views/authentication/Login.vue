@@ -18,7 +18,6 @@ const reset = ()=>{
 
 const login = ()=>{    
       axios.post(import.meta.env.VITE_AUTH_BASE_URL+'/login',loginData.value).then((response)=>{
-      reset()
     
       if(response.data.token == null)
           notifyError("INCORRECT USERNAME OR PASSWORD")
@@ -32,8 +31,11 @@ const login = ()=>{
   
       })
       .catch((error)=>{
+          notifyError('Incorrect Username/Password')
           console.log('Error: '+ error.message)
       })
+      reset();
+      
   }
 
 </script>
@@ -69,7 +71,7 @@ const login = ()=>{
                      
                         <div class="flex flex-col w-full space-y-3">
                             <button class="submit">Sign In</button>
-                            <p class="signin">Don't have an account yet? <router-link to="/login" class="text-royalblue">Sign Up</router-link> </p>
+                            <p class="signin">Don't have an account yet? <router-link to="/register" class="text-royalblue">Sign Up</router-link> </p>
                         </div>
                      
                 </form>

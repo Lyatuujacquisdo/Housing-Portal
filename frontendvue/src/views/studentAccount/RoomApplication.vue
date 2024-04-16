@@ -1,5 +1,11 @@
+<script setup>
+    import { ref } from "vue";
+    const {vacantRooms} = defineProps(['vacantRooms'])
+
+
+</script>
 <template>
-    <div class="">
+    <div class="w-full overflow-auto">
         <div class="w-1/5 mb-4">
             <label for="countries" class="block mb-2 text-md font-medium text-gray-900">Select Block</label>
 
@@ -11,21 +17,21 @@
                 <option value="DE">Germany</option>
             </select>
         </div>
-     
 
-        <div class="border-[2px] border-[#51751d] min-w-[300px] w-1/5 flex flex-col hover:shadow-md transition-all duration-100 ease-in">
+        <div class="w-full flex flex-row flex-wrap  items-center mx-auto">
+            <div v-for="room in vacantRooms" :key="room.id" class="border-[2px] m-1 border-[#51751d] min-w-[300px] w-1/5 flex flex-col hover:shadow-md transition-all duration-100 ease-in">
             <div class="flex flex-row space-x-8 p-4 items-center">
                 <span class="material-symbols-outlined text-3xl text-gray-600 border rounded-full py-1 px-2 border-[#51751d]">
                     bed
                 </span>
                 <div class="font-sans text-lg text-[#51751d] font-medium">
-                    Room 3A-1
+                   {{room.roomLabel}}
                 </div>
             </div>
 
             <!-- vacancy -->
             <div class="px-4 text-lg font-medium">
-                Vacancy : 4 left
+                Vacancy : {{room.vacancy}} left
             </div>
 
             <!-- members -->
@@ -33,19 +39,21 @@
                 <span class="underline text-gray-600 text-[18px]">Members</span>
                 <div class="flex flex-row justify-between">
                    
-                    <div class="flex flex-col text-[16px]">
-                        <div>Pius Semufali <span class="text-gray-700">(BSc.SE3)</span> </div>
-                        <div>Pius Semufali <span class="text-gray-700">(BSc.SE3)</span> </div>
-                        <div>Pius Semufali <span class="text-gray-700">(BSc.SE3)</span> </div>
-                        <div>Pius Semufali <span class="text-gray-700">(BSc.SE3)</span> </div>
+                    <div  v-for="member in room.students" :key="member" class="flex flex-col text-[16px]">
+                        <div>{{member.firstName}}  {{member.lastName}} <span class="text-gray-700">({{member.program}}{{ member.yos }})</span> </div>
+               
                     </div>
-
+                    <div v-if="room.students">
+                        No members Yet
+                    </div>
                     <div class="flex items-end justify-end">
                         <button class="h-10 bg-[#51751d] px-2 rounded-md hover:bg-opacity-80 text-white">Select</button>
                     </div>
                 </div>
                
             </div>
+            </div>
         </div>
+
     </div>
 </template>
