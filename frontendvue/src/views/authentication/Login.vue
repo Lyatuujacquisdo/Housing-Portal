@@ -25,7 +25,7 @@ const login = ()=>{
       else
       {
           localStorage.setItem('token', response.data.token);
-          localStorage.setItem('email', response.data.registrationNo);
+          localStorage.setItem('registrationNo', response.data.registrationNo);
           router.push('/acc')
       }
   

@@ -75,12 +75,12 @@
                         />
                     </div>
                     <div class="">
-                        <label class="mb-4 font-medium text-lg text-gray-700" for="email">Room <span class="text-red-500" :class="{'text-green-500':profile.roomStatus == 'ASSIGNED'}" >({{profile.roomStatus}})</span> </label>
+                        <label class="mb-4 font-medium text-lg text-gray-700" for="email">Room <span  :class="{'text-green-600':profile.roomStatus == 'ASSIGNED','text-red-500':profile.roomStatus == 'NOT_ASSIGNED'}" >({{profile.roomStatus}})</span> </label>
                         <input
                             v-if="profile.roomStatus == 'ASSIGNED'"
                             disabled
                             type="text"
-                            v-model="profile.roomId"
+                            v-model="profile.roomID"
                             placeholder="Email Address"
                             class="block min-h-[auto] w-full border rounded  bg-transparent px-3 py-[0.32rem]  outline-none transition-max-height duration-300 ease-in-out"
                             id="email"

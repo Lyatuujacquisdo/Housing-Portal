@@ -119,7 +119,7 @@
                 <form @submit.prevent="register()" class="form flex flex-col gap-[10px] relative rounded-sm p-[20px] h-full py-10 mx-auto items-center justify-center overflow-hidden">
                     <p class="title">Register</p>
                     <p class="message">Sign up now and get full access to our app. </p>
-                    <div class="flex justify-center">
+                    <div class="flex justify-center space-x-1">
                         <label>
                             <input v-model="registerData.firstName" required placeholder="" type="text" class="input">
                             <span>Firstname</span>
@@ -134,7 +134,7 @@
                         <input v-model="registerData.email" required placeholder="" type="email" class="input">
                         <span>Email</span>
                     </label> 
-                    <div class="flex justify-center">
+                    <div class="flex justify-center space-x-1">
                         <label>
                             <input v-model="registerData.program" required placeholder="" type="text" class="input">
                             <span>Program</span>

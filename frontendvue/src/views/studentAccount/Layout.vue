@@ -21,8 +21,8 @@
                     </button>
 
                     <div  
-                    class=" absolute -bottom-28 rounded -left-36 w-30 bg-[#51751d] text-white flex flex-col h-24 p-2 transition-all duration-400 ease-in" :class="{' opacity-0 -translate-y-4 cursor-not-allowed hidden':!showLogoutModal,' opacity-1 translate-y-0': showLogoutModal}">
-                        <div class="border-b-[1px] border-gray-50 text-sm text-left p-2">pbsemufali21@gmail.com</div>
+                    class=" absolute -bottom-28 rounded -left-24 w-[150px] bg-[#51751d] text-white flex flex-col h-24 p-2 transition-all duration-400 ease-in" :class="{' opacity-0 -translate-y-4 cursor-not-allowed hidden':!showLogoutModal,' opacity-1 translate-y-0': showLogoutModal}">
+                        <div class="border-b-[1px] border-gray-50 text-sm text-left p-2">{{myRegistrationNo}}</div>
                         <button @click="logout()" class="flex flex-row items-center space-x-2 p-1 my-1 hover:bg-gray-100 hover:bg-opacity-10  hover:rounded-lg">
                             <span class="material-symbols-outlined">
                                 logout
@@ -36,8 +36,6 @@
             <!-- sidebar -->
             <div @click="showLogoutModal = false" class="relative max-md:absolute max-md:z-30 max-md:border-r-[2px] left-0 z-16 h-full flex flex-col space-y-2 overflow-hidden transition-width duration-300 ease-in pt-[110px]" :class="{'md:w-20 max-md:w-0':!sidebarExpanded,'md:w-64 max-md:w-3/4':sidebarExpanded }">
                 <div class="absolute md:hidden top-0 flex flex-row justify-between px-4 w-full"> 
-                  
-                    
                     <button type="button" class=" p-1 h-fit right-0 top-2 ml-auto transition duration-300 ease-in z-16 m-2" :class="{'  bg-white flex items-center justify-center flex-col':!sidebarExpanded}" @click="sidebarExpanded =!sidebarExpanded">
                           <div class="w-[23px] h-[2px] transition ease-in duration-150 bg-[#51751d] mb-1" :class="{'rotate-45 mb-0 translate-y-[1px]':sidebarExpanded,'rotate-0 mb-1':!sidebarExpanded}"></div>
                           <div class="w-[23px] h-[2px] transition ease-in duration-150 bg-[#51751d] mb-1" :class="{'hidden mb-0':sidebarExpanded,'mb-1':!sidebarExpanded}"></div>
@@ -93,7 +91,7 @@
             </div>
 
 
-            <div @click="showLogoutModal = false"  class=" flex flex-grow transition-width items-center justify-center duration-200 ease-in flex-col mt-24 mb-5 mr-8 pt-3 rounded-md shadow border-[2px] border-gray-200 bg-white overflow-y-auto "  :class="{'max-md:-z-10':sidebarExpanded}">
+            <div @click="showLogoutModal = false"  class=" flex w-full transition-width duration-200 ease-in flex-col mt-24 mb-5 mr-8 pt-3 rounded-md shadow border-[2px] border-gray-200 bg-white"  :class="{'max-md:-z-10':sidebarExpanded}">
                 <nav class="h-6 w-full relative">
                     <button type="button" class="absolute p-1 left-0 top-2 mr-auto transition duration-300 ease-in z-16 m-2" :class="{'  bg-white flex items-center justify-center flex-col':!sidebarExpanded}" @click="sidebarExpanded =!sidebarExpanded">
                           <div class="w-[23px] h-[2px] transition ease-in duration-150 bg-[#51751d] mb-1" :class="{'rotate-45 mb-0 translate-y-[1px]':sidebarExpanded,'rotate-0 mb-1':!sidebarExpanded}"></div>
@@ -103,8 +101,8 @@
                 </nav>
 
                 <!-- main content -->
-                <div class=" mt-8 px-4 -z-5 relative m-5" :class="{'max-md:blur-sm max-md:pointer-events-none':sidebarExpanded}" >
-                    <router-view :profile="profile" :vacantRooms="vacantRooms" ></router-view> 
+                <div class="mt-8 px-4 -z-5 relative m-5 h-[96%] my-1" :class="{'max-md:blur-sm max-md:pointer-events-none':sidebarExpanded}" >
+                    <router-view :profile="profile" ></router-view> 
                 </div>
             </div>
         </div>
@@ -116,75 +114,21 @@
 
 <script setup>
     
-    import {ref,onMounted} from 'vue'
-    import {useRoute, useRouter} from 'vue-router'
+    import {ref,onMounted, computed} from 'vue'
+    import {useRoute} from 'vue-router'
     import myFooter from '@/components/myFooter.vue';
-    import axios from 'axios';
+    import {getProfile, getVacantRooms, logout} from "@/utils/serverRequests.js" 
 
-    const router = useRouter();
     const showLogoutModal = ref(false)
     const sidebarExpanded = ref(true)
     const profile = ref({})
-    const vacantRooms = ref({})
 
-    const getProfile = async()=>{
-        await axios.post(import.meta.env.VITE_RES_BASE_URL+'/profile',null,
-            {
-                headers: {
-                    Authorization : 'Bearer '+ localStorage.getItem('token'),
-                }
-            }
-        ).then((response)=>{
-
-            if(response.data == null)
-                notifyError("Server Error, contact Admin!")
-            
-            else
-            {
-                profile.value = response.data
-                localStorage.setItem('registrationNo', response.data.registrationNo);
-                localStorage.setItem('email', response.data.email);
-            }
-        })
-        .catch((error)=>{
-            console.log('Error: '+ error.message)
-        })
-      } 
-      const getVacantRooms = async()=>{
-        await axios.get(import.meta.env.VITE_RES_BASE_URL+'/vacant',
-            {
-                headers: {
-                    Authorization : 'Bearer '+ localStorage.getItem('token'),
-                }
-            }
-        ).then((response)=>{
-
-            if(response.data == null)
-                notifyError("Server Error, contact Admin!")
-            
-            else
-            {
-                vacantRooms.value = response.data
-                localStorage.setItem('registrationNo', response.data.registrationNo);
-                localStorage.setItem('email', response.data.email);
-            }
-        })
-        .catch((error)=>{
-            console.log('Error: '+ error.message)
-        })
-      } 
-      
-    
+    const myRegistrationNo = computed(()=>localStorage.getItem('registrationNo'))
+  
     onMounted(async () =>{
+        profile.value = await getProfile();
         await getVacantRooms();
-        await getProfile();
      })
-
-    const logout = ()=>{
-        console.log('went through logout function');
-        localStorage.removeItem('token')
-        router.push('/')
-    }
 
 </script>
 
