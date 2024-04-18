@@ -112,6 +112,17 @@ public class ResourceService {
        return allRooms.stream().filter(room -> room.getVacancy() > 0).collect(Collectors.toList());
     }
 
+    public List<Student> getRoomies(String roomLabel){
+        Optional<Room> room = roomRepo.findByRoomLabel(roomLabel);
+        if(room.isEmpty()){
+            System.out.println("No such room");
+            return null;
+        }
+
+        Room selectedRoom = room.get();
+
+        return  selectedRoom.getStudents();
+    }
     public String selectRoom(String roomLabel, String registrationNo){
         Optional<Room> room = roomRepo.findByRoomLabel(roomLabel);
         if(room.isEmpty()){

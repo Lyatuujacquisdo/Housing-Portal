@@ -55,4 +55,11 @@ public class ResourceController {
         String registrationNo = userDetails.getUsername();
         return resourceService.selectRoom(roomLabel, registrationNo);
     }
+
+    @GetMapping("/roomies")
+    public List<Student> getRoomies(@RequestParam String roomLabel, Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String registrationNo = userDetails.getUsername();
+        return resourceService.getRoomies(roomLabel);
+    }
 }
